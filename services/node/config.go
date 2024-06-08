@@ -31,7 +31,7 @@ func generateIDFromAddress(address string) (uint64, error) {
 	// Convertir la dirección IP a bytes
 	ip := net.ParseIP(address)
 	if ip == nil {
-		return 0, fmt.Errorf("Invalid IP Address: %s", address)
+		return 0, fmt.Errorf("invalid ip address: %s", address)
 	}
 
 	// Calcular el hash SHA256 de la dirección IP

@@ -26,8 +26,8 @@ func main() {
 	// Agregar algunos vecinos ficticios a la tabla DHT
 	for i := 0; i < len(node.DHT.Buckets); i++ {
 		// Agregar vecinos a cada bucket (por ejemplo, solo uno para este caso)
-		node.DHT.Buckets[i] = append(node.DHT.Buckets[i], Neighbor{ID: 2, Address: "192.168.1.1"})
-		node.DHT.Buckets[i] = append(node.DHT.Buckets[i], Neighbor{ID: 2, Address: "192.168.1.1"})
+		node.DHT.Buckets[i][2] = append(node.DHT.Buckets[i][2], Neighbor{Address: "192.168.1.102"})
+		node.DHT.Buckets[i][3] = append(node.DHT.Buckets[i][3], Neighbor{Address: "192.168.1.103"})
 	}
 	// Iterar sobre los buckets e imprimir cada uno
 	for i, bucket := range node.DHT.Buckets {
