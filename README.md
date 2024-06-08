@@ -5,12 +5,12 @@
 ### Routing Overlay
 Un **routing overlay** es una red lógica superpuesta sobre una red física. Los nodos en un routing overlay pueden comunicarse entre sí directamente a través de enlaces virtuales, independientemente de su ubicación física en la red subyacente. Esto permite la creación de redes eficientes y escalables, facilitando la transmisión de datos y la realización de tareas distribuidas.
 
-![Routing Overlay](images/overlay.jpg)
+![Routing Overlay](images/overlay.png)
 
 ### DHT Kademlia
 Kademlia es una **Distributed Hash Table (DHT)** que permite la localización eficiente de nodos y datos en una red P2P. Utiliza un sistema de enrutamiento basado en XOR y una tabla de enrutamiento estructurada en buckets, lo que facilita la escalabilidad y la tolerancia a fallos. Kademlia es ampliamente utilizada en redes descentralizadas debido a su eficiencia y robustez.
 
-![Kademlia](images/kademlia.jpg)
+![Kademlia](images/dht.png)
 
 ## Arquitectura del Proyecto
 
