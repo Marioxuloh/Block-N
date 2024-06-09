@@ -20,7 +20,9 @@ func InitDHT(numBuckets, maxNeighborsPerBucket int) DHT {
 
 func (n *Node) Store(neighbor Neighbor) {
 	i := hammingDistance(n.ID, neighbor.ID)
-	n.DHT.Buckets[i][neighbor.ID] = neighbor.Address
+	if !(i >= n.Config.NumBuckets) {
+		n.DHT.Buckets[i][neighbor.ID] = neighbor.Address
+	}
 }
 
 func (n *Node) Delete(key key) {
@@ -34,8 +36,12 @@ func (n *Node) Delete(key key) {
 
 func (n *Node) Retrieve(key key) (string, bool) {
 	i := hammingDistance(n.ID, key)
-	value, exists := n.DHT.Buckets[i][key]
-	return value, exists
+	if !(i >= n.Config.NumBuckets) {
+		value, exists := n.DHT.Buckets[i][key]
+		return value, exists
+	} else {
+		return "", false
+	}
 }
 
 func (n *Node) RetrieveClosestNeighbor(targetID key) Neighbor {

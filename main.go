@@ -8,18 +8,18 @@ import (
 )
 
 func main() {
-	node, nodeConfig, err := node.InitNode()
+	node, err := node.InitNode()
 	if err != nil {
 		log.Fatal(err)
 	}
 	println()
 	fmt.Println("---------Node initialized on Block-Net---------")
 	fmt.Println("ID:", hex.EncodeToString(node.ID[:]))
-	fmt.Println("Name:", nodeConfig.Name)
+	fmt.Println("Name:", node.Config.Name)
 	fmt.Println("Address:", node.Address)
-	fmt.Println("NodePort:", nodeConfig.Port)
-	fmt.Println("NumBuckets:", nodeConfig.NumBuckets)
-	fmt.Println("MaxNeighborsPerBucket:", nodeConfig.MaxNeighborsPerBucket)
+	fmt.Println("NodePort:", node.Config.Port)
+	fmt.Println("NumBuckets:", node.Config.NumBuckets)
+	fmt.Println("MaxNeighborsPerBucket:", node.Config.MaxNeighborsPerBucket)
 	fmt.Println("-----------------------------------------------")
 	println()
 }

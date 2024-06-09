@@ -1,21 +1,22 @@
 package node
 
-func InitNode() (*Node, *NodeConfig, error) {
+func InitNode() (*Node, error) {
 	// Cargar la configuración del nodo desde el archivo nodeConfig.yaml
 	config, err := LoadNodeConfig("./configs/nodeConfig.yaml")
 	if err != nil {
-		return &Node{}, &NodeConfig{}, err
+		return &Node{}, err
 	}
 
 	id, err := generateIDFromAddress(config.Name)
 	if err != nil {
-		return &Node{}, &NodeConfig{}, err
+		return &Node{}, err
 	}
 
 	node := Node{
 		ID:      id,
 		Address: config.Address,
 		DHT:     InitDHT(config.NumBuckets, config.NumBuckets),
+		Config:  config,
 	}
 	/*
 		id2 := [32]byte{0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xAA, 0xAF, 0xFF, 0xFF, 0xFF, 0xFF, 0xAF, 0xFF, 0xFE}
@@ -25,6 +26,6 @@ func InitNode() (*Node, *NodeConfig, error) {
 		}
 		fmt.Println(hammingDistance(id, id2))
 	*/
-	return &node, &config, nil
+	return &node, nil
 
 }

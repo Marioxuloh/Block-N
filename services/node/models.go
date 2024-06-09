@@ -12,6 +12,7 @@ type Node struct {
 	ID      key
 	Address string
 	DHT     DHT
+	Config  NodeConfig
 }
 
 type Neighbor struct {

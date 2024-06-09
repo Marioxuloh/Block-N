@@ -1,4 +1,4 @@
-name: "marioinginfo"
+name: "SnyderNode"
 address: "192.168.1.129"
 port: 5000
 num_buckets: 256
