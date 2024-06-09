@@ -13,7 +13,7 @@ func main() {
 		log.Fatal(err)
 	}
 	println()
-	fmt.Println("---------Node initialized on Block-Net---------")
+	fmt.Println("----------------Node initialized---------------")
 	fmt.Println("ID:", hex.EncodeToString(node.ID[:]))
 	fmt.Println("Name:", node.Config.Name)
 	fmt.Println("Address:", node.Address)
