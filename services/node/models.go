@@ -1,6 +1,7 @@
 package node
 
 type NodeConfig struct {
+	Name                  string `yaml:"name"`
 	Address               string `yaml:"address"`
 	Port                  int    `yaml:"port"`
 	NumBuckets            int    `yaml:"num_buckets"`
@@ -8,16 +9,18 @@ type NodeConfig struct {
 }
 
 type Node struct {
-	ID      [20]byte
+	ID      key
 	Address string
 	DHT     DHT
 }
 
 type Neighbor struct {
-	ID      [20]byte
+	ID      key
 	Address string
 }
 
 type DHT struct {
-	Buckets []map[[20]byte]string
+	Buckets []map[key]string
 }
+
+type key [32]byte

@@ -2,8 +2,6 @@ package node
 
 import (
 	"crypto/sha256"
-	"fmt"
-	"net"
 	"os"
 
 	"gopkg.in/yaml.v2"
@@ -26,27 +24,15 @@ func LoadNodeConfig(filename string) (NodeConfig, error) {
 	return config, nil
 }
 
-// Generate a 160-bit ID from an IP address
-func generateIDFromAddress(address string) ([20]byte, error) {
-	var id [20]byte
-
-	// Convert the IP address to bytes
-	ip := net.ParseIP(address)
-	if ip == nil {
-		return id, fmt.Errorf("invalid ip address: %s", address)
-	}
-
-	// Convert IP to 16-byte format for uniformity (handling both IPv4 and IPv6)
-	ip = ip.To16()
-	if ip == nil {
-		return id, fmt.Errorf("unable to convert IP to 16 bytes: %s", address)
-	}
+// Generate a 160-bit ID from name of node
+func generateIDFromAddress(address string) (key, error) {
+	var id key
 
 	// Compute the SHA-256 hash of the IP address
-	hash := sha256.Sum256(ip)
+	hash := sha256.Sum256([]byte(address))
 
 	// Use only the first 20 bytes (160 bits) of the hash to form the ID
-	copy(id[:], hash[:20])
+	copy(id[:], hash[:])
 
 	return id, nil
 }

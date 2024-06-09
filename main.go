@@ -15,6 +15,7 @@ func main() {
 	println()
 	fmt.Println("---------Node initialized on Block-Net---------")
 	fmt.Println("ID:", hex.EncodeToString(node.ID[:]))
+	fmt.Println("Name:", nodeConfig.Name)
 	fmt.Println("Address:", node.Address)
 	fmt.Println("NodePort:", nodeConfig.Port)
 	fmt.Println("NumBuckets:", nodeConfig.NumBuckets)
