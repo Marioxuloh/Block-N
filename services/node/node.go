@@ -1,20 +1,19 @@
-package main
+package node
 
 import (
 	"fmt"
-	"log"
 )
 
-func main() {
+func InitNode() (Node, error) {
 	// Cargar la configuración del nodo desde el archivo nodeConfig.yaml
 	config, err := LoadNodeConfig("./configs/nodeConfig.yaml")
 	if err != nil {
-		log.Fatal("Error loading node config:", err)
+		return Node{}, err
 	}
 
 	id, err := generateIDFromAddress(config.Address)
 	if err != nil {
-		log.Fatal(err)
+		return Node{}, err
 	}
 
 	node := Node{
@@ -35,5 +34,7 @@ func main() {
 	}
 
 	println(node.ID, node.Address, node.DHT.Buckets)
+
+	return node, nil
 
 }
