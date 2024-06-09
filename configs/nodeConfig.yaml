@@ -1,4 +1,4 @@
-address: "192.168.1.100"
+address: "192.168.1.129"
 port: 5000
 num_buckets: 160
 max_neighbors_per_bucket: 20

@@ -2,6 +2,8 @@ package main
 
 import (
 	"Block-N/services/node"
+	"encoding/hex"
+	"fmt"
 	"log"
 )
 
@@ -10,5 +12,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	println(node.ID)
+	println()
+	fmt.Println("------Nodo inicializado en la red Block-N------")
+	fmt.Println("ID:", hex.EncodeToString(node.ID[:]))
+	fmt.Println("Address:", node.Address)
+	fmt.Println("-----------------------------------------------")
+	println()
 }

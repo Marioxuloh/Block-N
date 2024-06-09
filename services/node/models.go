@@ -8,15 +8,16 @@ type NodeConfig struct {
 }
 
 type Node struct {
-	ID      uint64
+	ID      [20]byte
 	Address string
 	DHT     DHT
 }
 
 type Neighbor struct {
+	ID      [20]byte
 	Address string
 }
 
 type DHT struct {
-	Buckets []map[uint64][]Neighbor
+	Buckets []map[[20]byte]string
 }

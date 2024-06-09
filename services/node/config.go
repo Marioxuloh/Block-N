@@ -26,22 +26,27 @@ func LoadNodeConfig(filename string) (NodeConfig, error) {
 	return config, nil
 }
 
-// generateIDFromAddress genera un ID único a partir de la dirección IP del nodo
-func generateIDFromAddress(address string) (uint64, error) {
-	// Convertir la dirección IP a bytes
+// Generate a 160-bit ID from an IP address
+func generateIDFromAddress(address string) ([20]byte, error) {
+	var id [20]byte
+
+	// Convert the IP address to bytes
 	ip := net.ParseIP(address)
 	if ip == nil {
-		return 0, fmt.Errorf("invalid ip address: %s", address)
+		return id, fmt.Errorf("invalid ip address: %s", address)
 	}
 
-	// Calcular el hash SHA256 de la dirección IP
+	// Convert IP to 16-byte format for uniformity (handling both IPv4 and IPv6)
+	ip = ip.To16()
+	if ip == nil {
+		return id, fmt.Errorf("unable to convert IP to 16 bytes: %s", address)
+	}
+
+	// Compute the SHA-256 hash of the IP address
 	hash := sha256.Sum256(ip)
 
-	// Convertir el hash a uint64
-	var id uint64
-	for _, b := range hash[:8] { // Utilizar los primeros 8 bytes del hash
-		id = id<<8 | uint64(b)
-	}
+	// Use only the first 20 bytes (160 bits) of the hash to form the ID
+	copy(id[:], hash[:20])
 
 	return id, nil
 }
