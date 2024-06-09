@@ -1,15 +1,15 @@
 package node
 
-func InitNode() (*Node, error) {
+func InitNode() (*Node, *NodeConfig, error) {
 	// Cargar la configuración del nodo desde el archivo nodeConfig.yaml
 	config, err := LoadNodeConfig("./configs/nodeConfig.yaml")
 	if err != nil {
-		return &Node{}, err
+		return &Node{}, &NodeConfig{}, err
 	}
 
 	id, err := generateIDFromAddress(config.Address)
 	if err != nil {
-		return &Node{}, err
+		return &Node{}, &NodeConfig{}, err
 	}
 
 	node := Node{
@@ -26,6 +26,6 @@ func InitNode() (*Node, error) {
 		}
 		fmt.Println(hammingDistance(id, id2))
 	*/
-	return &node, nil
+	return &node, &config, nil
 
 }
