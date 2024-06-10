@@ -1,3 +1,0 @@
-[] para hacer join a la red se hara una peticion recursiva normal 
-   y si se obtiene respuesta es que ya existe un nodo con ese nombre
-   por lo tanto el cliente tendria que configurar el nodo con otro nombre

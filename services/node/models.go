@@ -1,7 +1,7 @@
 package node
 
 type NodeConfig struct {
-	Name                  string `yaml:"name"`
+	Domain                string `yaml:"domain"`
 	Address               string `yaml:"address"`
 	Port                  int    `yaml:"port"`
 	NumBuckets            int    `yaml:"num_buckets"`

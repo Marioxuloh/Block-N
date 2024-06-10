@@ -1,0 +1,8 @@
+[] para hacer bootstrap a la red se hara una peticion recursiva normal 
+   y si se obtiene respuesta es que ya existe un nodo con ese nombre
+   por lo tanto el cliente tendria que configurar el nodo con otro nombre
+   ,para el boostraping se hara primero esto y posteriormente un store al 
+   nodo que conozcas y el ya ira propagando tus datos
+
+[] para el discovery lanza un mensaje discovery cada 10s(como ospf)(a los 20 nodos conocidos mas cercanos) y le devolveran una lista de vecinos
+   tambien hara ping a los vecinos para ver sis iguen activos

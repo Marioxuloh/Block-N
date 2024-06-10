@@ -7,7 +7,7 @@ func InitNode() (*Node, error) {
 		return &Node{}, err
 	}
 
-	id, err := generateIDFromAddress(config.Name)
+	id, err := generateIDFromAddress(config.Domain)
 	if err != nil {
 		return &Node{}, err
 	}

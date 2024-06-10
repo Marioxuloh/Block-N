@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package discovery;
+
+option go_package = "../proto";
+
+service Discoverer {
+    rpc Discovery (DiscoveryRequest) returns (DiscoveryResponse) {}
+}
+  
+message DiscoveryRequest {
+    bytes id = 1;
+}
+
+message DiscoveryResponse {
+    string address = 1;
+}
