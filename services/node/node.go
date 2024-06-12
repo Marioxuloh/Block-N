@@ -13,10 +13,9 @@ func InitNode() (*Node, error) {
 	}
 
 	node := Node{
-		ID:      id,
-		Address: config.Address,
-		DHT:     InitDHT(config.NumBuckets, config.NumBuckets),
-		Config:  config,
+		ID:     id,
+		DHT:    InitDHT(config.NumBuckets, config.NumBuckets),
+		Config: config,
 	}
 
 	return &node, nil

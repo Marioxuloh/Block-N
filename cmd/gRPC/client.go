@@ -12,9 +12,10 @@ import (
 )
 
 func Bootstrap(n *node.Node) error {
+	// multidifusion a todos los nodos conocidos de bootstrap
 	for _, bucket := range n.DHT.Buckets {
-		for _, value := range bucket {
-			conn, err := grpc.NewClient(value+":50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+		for _, address := range bucket {
+			conn, err := grpc.NewClient(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 			if err != nil {
 				return err
 			}
@@ -27,7 +28,7 @@ func Bootstrap(n *node.Node) error {
 
 			req := &pb.BootstrapRequest{
 				Id:      n.ID[:],
-				Address: n.Address,
+				Address: n.Config.Address,
 			}
 
 			res, err := client.Bootstrap(ctx, req)
@@ -42,9 +43,10 @@ func Bootstrap(n *node.Node) error {
 }
 
 func Discovery(n *node.Node, timeout int) error {
+	// multidifusion a todos los nodos conocidos de discovery, a esto se le debe agregar algo para que se repita cada 10 segundos indefinidamente
 	for _, bucket := range n.DHT.Buckets {
-		for _, value := range bucket {
-			conn, err := grpc.NewClient(value+":50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+		for _, address := range bucket {
+			conn, err := grpc.NewClient(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 			if err != nil {
 				return err
 			}

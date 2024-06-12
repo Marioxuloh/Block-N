@@ -45,7 +45,7 @@ func (n *Node) Delete(key Key) {
 
 func (n *Node) Retrieve(targetID Key) (string, bool) {
 	if targetID == n.ID {
-		return n.Address, true
+		return n.Config.Address, true
 	}
 	i := hammingDistance(n.ID, targetID)
 	if i >= 0 && i < n.Config.NumBuckets {
@@ -58,7 +58,7 @@ func (n *Node) Retrieve(targetID Key) (string, bool) {
 
 func (n *Node) RetrieveClosestNeighbor(targetID Key) Neighbor {
 	if targetID == n.ID {
-		return Neighbor{ID: n.ID, Address: n.Address}
+		return Neighbor{ID: n.ID, Address: n.Config.Address}
 	}
 	closestNeighbor := Neighbor{}
 	closestDistance := math.MaxInt

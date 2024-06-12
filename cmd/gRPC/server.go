@@ -21,7 +21,7 @@ type server struct {
 
 func InitServer(n *node.Node) error {
 
-	lis, err := net.Listen("tcp", n.Address+":50051")
+	lis, err := net.Listen("tcp", n.Config.Address)
 	if err != nil {
 		return err
 	}
