@@ -66,7 +66,15 @@ func Discovery(n *node.Node, timeout int) error {
 				return err
 			}
 
-			fmt.Println(res.GetAddress())
+			neighbor_list := res.GetNeighborList()
+
+			// storear los nuevos vecinos en la dht
+			if len(neighbor_list) != 0 {
+				for _, neighbor := range neighbor_list {
+					n.Store(node.Neighbor{ID: node.Key(neighbor.Id), Address: neighbor.Address})
+				}
+			}
+			fmt.Println(neighbor_list)
 		}
 	}
 

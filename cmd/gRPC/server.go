@@ -52,10 +52,11 @@ func (s *server) Bootstrap(ctx context.Context, req *pb.BootstrapRequest) (*pb.B
 }
 
 func (s *server) Discovery(ctx context.Context, req *pb.DiscoveryRequest) (*pb.DiscoveryResponse, error) {
+	// devolvera un grupo de vecinos cercanos[demomento no lo hace jajajaja]
 	log.Println("Received: ID--> " + hex.EncodeToString(req.Id[:]))
-	err := discovery.Discovery(s.Node, req)
+	neighbor_list, err := discovery.Discovery(s.Node, req)
 	if err != nil {
-		return &pb.DiscoveryResponse{Address: "Discovery not successful"}, err
+		return &pb.DiscoveryResponse{}, err
 	}
-	return &pb.DiscoveryResponse{Address: "Discovery successful"}, nil
+	return neighbor_list, nil
 }
