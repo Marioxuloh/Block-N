@@ -25,8 +25,8 @@ func LoadNodeConfig(filename string) (NodeConfig, error) {
 }
 
 // Generate a 160-bit ID from name of node
-func generateIDFromAddress(address string) (key, error) {
-	var id key
+func generateIDFromAddress(address string) (Key, error) {
+	var id Key
 
 	// Compute the SHA-256 hash of the IP address
 	hash := sha256.Sum256([]byte(address))

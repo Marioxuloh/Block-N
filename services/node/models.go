@@ -9,19 +9,19 @@ type NodeConfig struct {
 }
 
 type Node struct {
-	ID      key
+	ID      Key
 	Address string
 	DHT     DHT
 	Config  NodeConfig
 }
 
 type Neighbor struct {
-	ID      key
+	ID      Key
 	Address string
 }
 
 type DHT struct {
-	Buckets []map[key]string
+	Buckets []map[Key]string
 }
 
-type key [32]byte
+type Key [32]byte

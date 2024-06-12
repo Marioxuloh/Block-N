@@ -18,14 +18,7 @@ func InitNode() (*Node, error) {
 		DHT:     InitDHT(config.NumBuckets, config.NumBuckets),
 		Config:  config,
 	}
-	/*
-		id2 := [32]byte{0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xAA, 0xAF, 0xFF, 0xFF, 0xFF, 0xFF, 0xAF, 0xFF, 0xFE}
-		node.Store(Neighbor{ID: id2, Address: "192.168.1.122"})
-		for i, bucket := range node.DHT.Buckets {
-			fmt.Printf("Bucket %d: %v\n", i, bucket)
-		}
-		fmt.Println(hammingDistance(id, id2))
-	*/
+
 	return &node, nil
 
 }

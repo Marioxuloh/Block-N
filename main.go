@@ -1,31 +1,46 @@
 package main
 
 import (
-	"Block-N/services/discovery"
+	"Block-N/cmd/gRPC"
 	"Block-N/services/node"
 	"encoding/hex"
 	"fmt"
 	"log"
+	"sync"
 )
 
+var wg sync.WaitGroup
+
 func main() {
-	node, err := node.InitNode()
+	n, err := node.InitNode()
 	if err != nil {
 		log.Fatal(err)
 	}
 	println()
 	fmt.Println("----------------Node initialized---------------")
-	fmt.Println("ID:", hex.EncodeToString(node.ID[:]))
-	fmt.Println("Domain:", node.Config.Domain)
-	fmt.Println("Address:", node.Address)
-	fmt.Println("NodePort:", node.Config.Port)
-	fmt.Println("NumBuckets:", node.Config.NumBuckets)
-	fmt.Println("MaxNeighborsPerBucket:", node.Config.MaxNeighborsPerBucket)
+	fmt.Println("ID:", hex.EncodeToString(n.ID[:]))
+	fmt.Println("Domain:", n.Config.Domain)
+	fmt.Println("Address:", n.Address)
+	fmt.Println("NodePort:", n.Config.Port)
+	fmt.Println("NumBuckets:", n.Config.NumBuckets)
+	fmt.Println("MaxNeighborsPerBucket:", n.Config.MaxNeighborsPerBucket)
 	fmt.Println("-----------------------------------------------")
 	println()
 
-	err = discovery.InitServer(node.Address)
+	go gRPC.InitServer(n)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	err = gRPC.Bootstrap(n)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = gRPC.Discovery(n, 10000)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	wg.Wait()
 }
