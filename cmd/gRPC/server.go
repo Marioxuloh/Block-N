@@ -56,3 +56,13 @@ func (s *server) Discovery(ctx context.Context, req *pb.DiscoveryRequest) (*pb.D
 	}
 	return neighbor_list, nil
 }
+
+// func Retrieve(n *node.Node, domain string, jumps int) (node.Neighbor, error) {
+func (s *server) Retrieve(ctx context.Context, req *pb.RetrieveRequest) (*pb.RetrieveResponse, error) {
+	// devolvera un grupo de vecinos cercanos
+	neighbor, err := Retrieve(s.Node, req.GetDomain(), req.GetJumps()+1)
+	if err != nil {
+		return &pb.RetrieveResponse{}, err
+	}
+	return neighbor, nil
+}

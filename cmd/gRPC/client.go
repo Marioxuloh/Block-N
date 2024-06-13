@@ -86,3 +86,42 @@ outerLoop:
 
 	return nil
 }
+
+// llamada recursiva hasta encontrar el nodo, si devuelve vacio todo es que unreachable, jumps inicialmente debe ser 0
+func Retrieve(n *node.Node, domain string, jumps int32) (*pb.RetrieveResponse, error) {
+
+	id := node.GenerateIDFromAddress(domain)
+	neighborAddress, exists := n.Retrieve(id)
+	if exists {
+		return &pb.RetrieveResponse{Id: id[:], Address: neighborAddress}, nil
+	}
+
+	if jumps >= int32(n.Config.MaxNeighborsPerBucket) {
+		return &pb.RetrieveResponse{Id: id[:], Address: "peer unreachable"}, nil
+	}
+
+	conn, err := grpc.NewClient(n.RetrieveClosestNeighbor(id).Address, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatal(err)
+		return &pb.RetrieveResponse{}, err
+	}
+
+	defer conn.Close()
+
+	client := pb.NewRetrieverClient(conn)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+
+	req := &pb.RetrieveRequest{
+		Domain: domain,
+		Jumps:  jumps,
+	}
+
+	res, err := client.Retrieve(ctx, req)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return &pb.RetrieveResponse{Id: res.GetId(), Address: res.GetAddress()}, nil
+
+}

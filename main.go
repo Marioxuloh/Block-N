@@ -27,7 +27,7 @@ func main() {
 	fmt.Println("-----------------------------------------------")
 	println()
 
-	n.Store(node.Neighbor{ID: node.GenerateIDFromAddress("SnyderNode1"), Address: "192.168.1.144:5000"})
+	//n.Store(node.Neighbor{ID: node.GenerateIDFromAddress("SnyderNode1"), Address: "192.168.1.144:5000"})
 
 	go gRPC.InitServer(n)
 	if err != nil {

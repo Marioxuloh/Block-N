@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package discovery;
+
+option go_package = "../proto";
+
+service Retriever {
+    rpc Retrieve (RetrieveRequest) returns (RetrieveResponse) {}
+}
+
+message RetrieveRequest {
+    string domain = 1;
+    int32 jumps = 2;
+}
+
+message RetrieveResponse {
+    bytes id = 1;
+    string address = 2;
+}
