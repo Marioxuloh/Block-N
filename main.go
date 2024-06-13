@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"sync"
+	"time"
 )
 
 var wg sync.WaitGroup
@@ -26,20 +27,43 @@ func main() {
 	fmt.Println("-----------------------------------------------")
 	println()
 
+	n.Store(node.Neighbor{ID: node.GenerateIDFromAddress("SnyderNode1"), Address: "192.168.1.144:5000"})
+
 	go gRPC.InitServer(n)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = gRPC.Bootstrap(n)
-	if err != nil {
-		log.Fatal(err)
-	}
+	flag := true
+	go func() {
+		for flag {
+			err = gRPC.Bootstrap(n)
+			if err != nil {
+				log.Fatal(err)
+				time.Sleep(time.Second * 2)
+			} else {
+				flag = false
+			}
+		}
+	}()
+	go func() {
+		for {
+			fmt.Println("----------------------DHT----------------------")
+			for _, bucket := range n.DHT.Buckets {
+				for key, address := range bucket {
+					println(key[:], address)
+				}
+			}
+			fmt.Println("-----------------------------------------------")
+			println()
+			err = gRPC.Discovery(n, 10000)
+			if err != nil {
+				log.Fatal(err)
+			}
+			time.Sleep(time.Second * 10)
+		}
+	}()
 
-	err = gRPC.Discovery(n, 10000)
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	wg.Add(1)
 	wg.Wait()
 }

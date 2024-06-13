@@ -1,0 +1,4 @@
+domain: "SnyderNode3"
+address: "192.168.1.144:5002"
+num_buckets: 256
+max_neighbors_per_bucket: 20

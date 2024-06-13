@@ -1,4 +1,4 @@
-domain: "SnyderNode"
+domain: "SnyderNode1"
 address: "192.168.1.144:5000"
 num_buckets: 256
 max_neighbors_per_bucket: 20
