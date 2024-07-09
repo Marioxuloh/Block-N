@@ -16,9 +16,11 @@ Kademlia es una **Distributed Hash Table (DHT)** que permite la localización ef
 
 Cada servicio define sus propios métodos y mensajes gRPC utilizando Protocol Buffers. Los archivos `.proto` se encuentran en el subdirectorio `proto` de cada servicio, y el código generado por `protoc` se utiliza para facilitar la comunicación eficiente entre los servicios.
 
+### Proto Files
+```protobuf
+
 ### (boostrap.proto)
 
-```protobuf
 syntax = "proto3";
 
 package discovery;
@@ -40,7 +42,6 @@ message BootstrapResponse {
 
 ### (discovery.proto)
 
-```protobuf
 syntax = "proto3";
 
 package discovery;
@@ -66,7 +67,6 @@ message DiscoveryResponse {
 
 ### (retrieve.proto)
 
-```protobuf
 syntax = "proto3";
 
 package discovery;
