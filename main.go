@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Block-N/cmd/api"
 	"Block-N/cmd/gRPC"
 	"Block-N/services/node"
 	"encoding/hex"
@@ -29,7 +30,7 @@ func main() {
 
 	//n.Store(node.Neighbor{ID: node.GenerateIDFromAddress("SnyderNode1"), Address: "192.168.1.144:5000"})
 
-	go gRPC.InitServer(n)
+	go gRPC.InitgRPCServer(n)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -49,14 +50,16 @@ func main() {
 
 	go func() {
 		for {
-			fmt.Println("----------------------DHT----------------------")
-			for _, bucket := range n.DHT.Buckets {
-				for key, address := range bucket {
-					println(key[:], address)
+			/*
+				fmt.Println("----------------------DHT----------------------")
+				for _, bucket := range n.DHT.Buckets {
+					for key, address := range bucket {
+						println(key[:], address)
+					}
 				}
-			}
-			fmt.Println("-----------------------------------------------")
-			println()
+				fmt.Println("-----------------------------------------------")
+				println()
+			*/
 			err = gRPC.Discovery(n, 10000)
 			if err != nil {
 				log.Fatal(err)
@@ -64,6 +67,11 @@ func main() {
 			time.Sleep(time.Second * 10)
 		}
 	}()
+
+	go api.InitRESTServer(n)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	wg.Add(1)
 	wg.Wait()

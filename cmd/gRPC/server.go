@@ -18,7 +18,7 @@ type server struct {
 	*node.Node
 }
 
-func InitServer(n *node.Node) error {
+func InitgRPCServer(n *node.Node) error {
 
 	lis, err := net.Listen("tcp", n.Config.Address)
 	if err != nil {
@@ -30,7 +30,7 @@ func InitServer(n *node.Node) error {
 	pb.RegisterBootstraperServer(s, &server{Node: n})
 	pb.RegisterDiscovererServer(s, &server{Node: n})
 
-	log.Printf("server listening at %v", lis.Addr())
+	log.Printf("server gRPC listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
 		return err
 	}

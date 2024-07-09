@@ -99,8 +99,11 @@ func Retrieve(n *node.Node, domain string, jumps int32) (*pb.RetrieveResponse, e
 	if jumps >= int32(n.Config.MaxNeighborsPerBucket) {
 		return &pb.RetrieveResponse{Id: id[:], Address: "peer unreachable"}, nil
 	}
-
-	conn, err := grpc.NewClient(n.RetrieveClosestNeighbor(id).Address, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	closestNeighbor := n.RetrieveClosestNeighbor(id)
+	if closestNeighbor.ID == (node.Key{}) && closestNeighbor.Address == "" {
+		return &pb.RetrieveResponse{Id: id[:], Address: "peer unreachable"}, nil
+	}
+	conn, err := grpc.NewClient(closestNeighbor.Address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatal(err)
 		return &pb.RetrieveResponse{}, err
@@ -120,6 +123,7 @@ func Retrieve(n *node.Node, domain string, jumps int32) (*pb.RetrieveResponse, e
 	res, err := client.Retrieve(ctx, req)
 	if err != nil {
 		log.Fatal(err)
+		return &pb.RetrieveResponse{}, err
 	}
 
 	return &pb.RetrieveResponse{Id: res.GetId(), Address: res.GetAddress()}, nil
